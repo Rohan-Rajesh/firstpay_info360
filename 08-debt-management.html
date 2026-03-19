@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirstPay - Debt Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            margin: 20px auto;
+            background: #f5f5f5;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: #1a1a1a;
+            position: relative;
+        }
+
+        /* Status bar */
+        .status-bar {
+            padding: 12px 24px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .status-left {
+            display: flex;
+            gap: 4px;
+        }
+
+        .status-right {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* Header */
+        .header {
+            padding: 20px 24px;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .header-left p {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .header-right {
+            width: 40px;
+            height: 40px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Main content */
+        .screen-content {
+            flex: 1;
+            padding: 16px 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Total Debt Card */
+        .total-debt-card {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8c8c 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .debt-label {
+            font-size: 12px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .debt-amount {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .debt-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        .debt-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        /* Debt List */
+        .debt-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .debt-card {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            cursor: pointer;
+            border: 1px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+
+        .debt-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .debt-card-title {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .debt-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .debt-type {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .debt-card-amount {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .debt-balance {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .debt-rate {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .debt-progress {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .debt-progress-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .progress-credit-card {
+            width: 45%;
+            background: #ff6b6b;
+        }
+
+        .progress-student-loan {
+            width: 68%;
+            background: #ffa502;
+        }
+
+        .progress-personal-loan {
+            width: 32%;
+            background: #ff6b6b;
+        }
+
+        .debt-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #999;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            background: white;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            flex-shrink: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            font-size: 11px;
+            color: #999;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: #1e3c72;
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-left">
+                <span>9:41</span>
+            </div>
+            <div class="status-right">
+                <span>◆◆◆</span>
+                <span>◆</span>
+                <span>◼</span>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <h1>Debt</h1>
+                <p>Track and manage your debts</p>
+            </div>
+            <div class="header-right">+</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="screen-content">
+            <!-- Total Debt Card -->
+            <div class="total-debt-card">
+                <div>
+                    <div class="debt-label">Total Debt</div>
+                    <div class="debt-amount">$8,750</div>
+                </div>
+                <div class="debt-info">
+                    <div>Monthly Payment: $425</div>
+                    <div>Avg Interest: 8.2%</div>
+                </div>
+                <button class="debt-button">Create Payoff Plan</button>
+            </div>
+
+            <!-- Debt List -->
+            <div>
+                <div class="section-title">Your Debts</div>
+                <div class="debt-list">
+                    <!-- Credit Card -->
+                    <div class="debt-card">
+                        <div class="debt-card-header">
+                            <div class="debt-card-title">
+                                <div class="debt-name">Chase Credit Card</div>
+                                <div class="debt-type">Credit Card</div>
+                            </div>
+                            <div class="debt-card-amount">
+                                <div class="debt-balance">$3,200</div>
+                                <div class="debt-rate">22.5% APR</div>
+                            </div>
+                        </div>
+                        <div class="debt-progress">
+                            <div class="debt-progress-fill progress-credit-card"></div>
+                        </div>
+                        <div class="debt-details">
+                            <div>Min Payment: $80/mo</div>
+                            <div>Payoff in: 48 months</div>
+                        </div>
+                    </div>
+
+                    <!-- Student Loan -->
+                    <div class="debt-card">
+                        <div class="debt-card-header">
+                            <div class="debt-card-title">
+                                <div class="debt-name">Federal Student Loan</div>
+                                <div class="debt-type">Student Loan</div>
+                            </div>
+                            <div class="debt-card-amount">
+                                <div class="debt-balance">$4,800</div>
+                                <div class="debt-rate">4.5% APR</div>
+                            </div>
+                        </div>
+                        <div class="debt-progress">
+                            <div class="debt-progress-fill progress-student-loan"></div>
+                        </div>
+                        <div class="debt-details">
+                            <div>Min Payment: $250/mo</div>
+                            <div>Payoff in: 20 months</div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Loan -->
+                    <div class="debt-card">
+                        <div class="debt-card-header">
+                            <div class="debt-card-title">
+                                <div class="debt-name">Personal Loan</div>
+                                <div class="debt-type">Personal Loan</div>
+                            </div>
+                            <div class="debt-card-amount">
+                                <div class="debt-balance">$750</div>
+                                <div class="debt-rate">8.0% APR</div>
+                            </div>
+                        </div>
+                        <div class="debt-progress">
+                            <div class="debt-progress-fill progress-personal-loan"></div>
+                        </div>
+                        <div class="debt-details">
+                            <div>Min Payment: $95/mo</div>
+                            <div>Payoff in: 8 months</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="06-dashboard.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">◆</div>
+                <div>Home</div>
+            </a>
+            <a href="07-budget.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">▦</div>
+                <div>Budget</div>
+            </a>
+            <a href="14-learning-hub.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">📈</div>
+                <div>Learn</div>
+            </a>
+            <a href="12-goals.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">♥</div>
+                <div>Goals</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

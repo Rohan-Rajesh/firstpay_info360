@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirstPay - Learning Module</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            margin: 20px auto;
+            background: #f5f5f5;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: #1a1a1a;
+            position: relative;
+        }
+
+        /* Status bar */
+        .status-bar {
+            padding: 12px 24px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .status-left {
+            display: flex;
+            gap: 4px;
+        }
+
+        .status-right {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* Header with back button */
+        .header {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            background: white;
+        }
+
+        .back-btn {
+            width: 32px;
+            height: 32px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Main content */
+        .screen-content {
+            flex: 1;
+            padding: 16px 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Lesson Card */
+        .lesson-card {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .lesson-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .lesson-desc {
+            font-size: 12px;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .lesson-progress {
+            background: rgba(255, 255, 255, 0.2);
+            height: 4px;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .lesson-progress-fill {
+            height: 100%;
+            width: 60%;
+            background: white;
+            border-radius: 2px;
+        }
+
+        .lesson-time {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        /* Content Section */
+        .content-section {
+            background: white;
+            padding: 14px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .content-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .content-text {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .content-highlight {
+            background: #f0f4ff;
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 3px solid #1e3c72;
+            font-size: 11px;
+            color: #1a1a1a;
+            margin-top: 4px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-left">
+                <span>9:41</span>
+            </div>
+            <div class="status-right">
+                <span>◆◆◆</span>
+                <span>◆</span>
+                <span>◼</span>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <a href="14-learning-hub.html" class="back-btn" style="text-decoration: none;">←</a>
+            <h1>Learning Module</h1>
+        </div>
+
+        <!-- Main Content -->
+        <div class="screen-content">
+            <!-- Lesson Card -->
+            <div class="lesson-card">
+                <div class="lesson-title">Credit Card Basics</div>
+                <div class="lesson-desc">Learn how credit cards work and how to use them wisely</div>
+                <div class="lesson-progress">
+                    <div class="lesson-progress-fill"></div>
+                </div>
+                <div class="lesson-time">Lesson 2 of 5 • 5 min read</div>
+            </div>
+
+            <!-- Content -->
+            <div class="content-section">
+                <div class="content-title">What is APR?</div>
+                <div class="content-text">
+                    APR (Annual Percentage Rate) is the yearly cost of borrowing money on your credit card. It includes the interest rate and any fees.
+                </div>
+                <div class="content-highlight">
+                    Key Point: A higher APR means you pay more interest on your balance. That's why paying off your balance quickly is important.
+                </div>
+
+                <div class="content-title" style="margin-top: 8px;">How Interest Works</div>
+                <div class="content-text">
+                    If you carry a balance, interest is calculated daily and added to your balance. This is why carrying a balance is expensive.
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="action-buttons">
+                <a href="10-learning-module.html" class="btn btn-secondary" style="text-decoration: none; display: block; text-align: center;">Previous</a>
+                <a href="11-learning-quiz.html" class="btn btn-primary" style="text-decoration: none; display: block; text-align: center;">Next Lesson</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

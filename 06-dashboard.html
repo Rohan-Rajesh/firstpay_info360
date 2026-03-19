@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirstPay - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            margin: 20px auto;
+            background: #f5f5f5;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: #1a1a1a;
+            position: relative;
+        }
+
+        /* Status bar */
+        .status-bar {
+            padding: 12px 24px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .status-left {
+            display: flex;
+            gap: 4px;
+        }
+
+        .status-right {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* Header */
+        .header {
+            padding: 20px 24px;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .header-left p {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .header-right {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* Main content */
+        .screen-content {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Account Balance Card */
+        .balance-card {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .balance-label {
+            font-size: 13px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .balance-amount {
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .balance-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Quick Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-top: 8px;
+        }
+
+        /* Transaction List */
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .transaction-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .transaction-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .transaction-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .transaction-date {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .transaction-amount {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            background: white;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            flex-shrink: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            font-size: 11px;
+            color: #999;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: #1e3c72;
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-left">
+                <span>9:41</span>
+            </div>
+            <div class="status-right">
+                <span>◆◆◆</span>
+                <span>◆</span>
+                <span>◼</span>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <h1>Dashboard</h1>
+                <p>Welcome back, Rohan</p>
+            </div>
+            <div class="header-right" onclick="window.location.href='15-profile-settings.html';" style="cursor: pointer;">⚙</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="screen-content">
+            <!-- Balance Card -->
+            <div class="balance-card">
+                <div>
+                    <div class="balance-label">Available Balance</div>
+                    <div class="balance-amount">$2,450</div>
+                </div>
+                <div class="balance-info">
+                    <div>Income: $3,200</div>
+                    <div>Spent: $750</div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">This Month</div>
+                    <div class="stat-value">$450</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Debt</div>
+                    <div class="stat-value">$1.2K</div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions -->
+            <div>
+                <div class="section-title">Recent Transactions</div>
+                <div class="transaction-list">
+                    <div class="transaction-item">
+                        <div class="transaction-left">
+                            <div class="transaction-icon">🛒</div>
+                            <div class="transaction-details">
+                                <div class="transaction-name">Grocery Store</div>
+                                <div class="transaction-date">Today at 2:30 PM</div>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">-$45.00</div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-left">
+                            <div class="transaction-icon">💼</div>
+                            <div class="transaction-details">
+                                <div class="transaction-name">Salary Deposit</div>
+                                <div class="transaction-date">Yesterday</div>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">+$1,600</div>
+                    </div>
+
+                    <div class="transaction-item">
+                        <div class="transaction-left">
+                            <div class="transaction-icon">☕</div>
+                            <div class="transaction-details">
+                                <div class="transaction-name">Coffee Shop</div>
+                                <div class="transaction-date">Dec 1</div>
+                            </div>
+                        </div>
+                        <div class="transaction-amount">-$5.50</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="06-dashboard.html" class="nav-item active" style="text-decoration: none;">
+                <div class="nav-icon">◆</div>
+                <div>Home</div>
+            </a>
+            <a href="07-budget.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">▦</div>
+                <div>Budget</div>
+            </a>
+            <a href="14-learning-hub.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">📈</div>
+                <div>Learn</div>
+            </a>
+            <a href="12-goals.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">♥</div>
+                <div>Goals</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

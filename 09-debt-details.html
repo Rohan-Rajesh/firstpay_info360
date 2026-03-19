@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirstPay - Debt Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            margin: 20px auto;
+            background: #f5f5f5;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: #1a1a1a;
+            position: relative;
+        }
+
+        /* Status bar */
+        .status-bar {
+            padding: 12px 24px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .status-left {
+            display: flex;
+            gap: 4px;
+        }
+
+        .status-right {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* Header with back button */
+        .header {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            background: white;
+        }
+
+        .back-btn {
+            width: 32px;
+            height: 32px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Main content */
+        .screen-content {
+            flex: 1;
+            padding: 16px 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Debt Balance Card */
+        .debt-balance-card {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8c8c 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .balance-label {
+            font-size: 12px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .balance-amount {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .balance-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        /* Quick Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #999;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-top: 0;
+            margin-bottom: 6px;
+        }
+
+        /* Details List */
+        .details-list {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .detail-item {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        /* Payoff Progress */
+        .payoff-section {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .payoff-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .payoff-progress {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .payoff-progress-fill {
+            height: 100%;
+            width: 45%;
+            background: linear-gradient(90deg, #ff6b6b 0%, #ff8c8c 100%);
+            border-radius: 3px;
+        }
+
+        .payoff-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #666;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-left">
+                <span>9:41</span>
+            </div>
+            <div class="status-right">
+                <span>◆◆◆</span>
+                <span>◆</span>
+                <span>◼</span>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <a href="08-debt-management.html" class="back-btn" style="text-decoration: none;">←</a>
+            <h1>Chase Credit Card</h1>
+        </div>
+
+        <!-- Main Content -->
+        <div class="screen-content">
+            <!-- Debt Balance Card -->
+            <div class="debt-balance-card">
+                <div>
+                    <div class="balance-label">Current Balance</div>
+                    <div class="balance-amount">$3,200</div>
+                </div>
+                <div class="balance-info">
+                    <div>Interest Paid: $284</div>
+                    <div>Min Payment: $80</div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Interest Rate</div>
+                    <div class="stat-value">22.5%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Credit Limit</div>
+                    <div class="stat-value">$5,000</div>
+                </div>
+            </div>
+
+            <!-- Details -->
+            <div>
+                <div class="section-title">Account Details</div>
+                <div class="details-list">
+                    <div class="detail-item">
+                        <div class="detail-label">Account Number</div>
+                        <div class="detail-value">****4892</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Opened</div>
+                        <div class="detail-value">Jan 2022</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Statement Date</div>
+                        <div class="detail-value">Dec 15, 2024</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Due Date</div>
+                        <div class="detail-value">Dec 28, 2024</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payoff Progress -->
+            <div>
+                <div class="section-title">Payoff Timeline</div>
+                <div class="payoff-section">
+                    <div class="payoff-title">On minimum payments only</div>
+                    <div class="payoff-progress">
+                        <div class="payoff-progress-fill"></div>
+                    </div>
+                    <div class="payoff-info">
+                        <div>Will pay off in 48 months</div>
+                        <div>Total interest: $1,920</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-primary">Make Payment</button>
+                <button class="btn btn-secondary">View Strategies</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

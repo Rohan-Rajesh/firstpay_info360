@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirstPay - Goal Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            margin: 20px auto;
+            background: #f5f5f5;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: #1a1a1a;
+            position: relative;
+        }
+
+        /* Status bar */
+        .status-bar {
+            padding: 12px 24px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .status-left {
+            display: flex;
+            gap: 4px;
+        }
+
+        .status-right {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* Header with back button */
+        .header {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            background: white;
+        }
+
+        .back-btn {
+            width: 32px;
+            height: 32px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* Main content */
+        .screen-content {
+            flex: 1;
+            padding: 16px 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Goal Progress Card */
+        .goal-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .goal-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .goal-saved-amount {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .goal-progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .goal-progress-fill {
+            height: 100%;
+            width: 65%;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .goal-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #999;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-top: 0;
+        }
+
+        /* Details Section */
+        .details-section {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        /* Action Button */
+        .action-button {
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-left">
+                <span>9:41</span>
+            </div>
+            <div class="status-right">
+                <span>◆◆◆</span>
+                <span>◆</span>
+                <span>◼</span>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <a href="12-goals.html" class="back-btn" style="text-decoration: none;">←</a>
+            <h1>Emergency Fund</h1>
+        </div>
+
+        <!-- Main Content -->
+        <div class="screen-content">
+            <!-- Goal Card -->
+            <div class="goal-card">
+                <div class="goal-title">Emergency Fund</div>
+                <div class="goal-saved-amount">$2,600</div>
+                <div class="goal-progress-bar">
+                    <div class="goal-progress-fill"></div>
+                </div>
+                <div class="goal-info">
+                    <div>65% complete</div>
+                    <div>$1,400 remaining</div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Target Amount</div>
+                    <div class="stat-value">$4,000</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Time Remaining</div>
+                    <div class="stat-value">5 months</div>
+                </div>
+            </div>
+
+            <!-- Details -->
+            <div>
+                <div class="section-title">Goal Details</div>
+                <div class="details-section">
+                    <div class="detail-item">
+                        <div class="detail-label">Monthly Target</div>
+                        <div class="detail-value">$280/month</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Created</div>
+                        <div class="detail-value">Jan 15, 2024</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Target Date</div>
+                        <div class="detail-value">June 30, 2025</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Total Contributed</div>
+                        <div class="detail-value">$2,600</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Interest Earned</div>
+                        <div class="detail-value">$48</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Contribution Button -->
+            <a href="12-goals.html" class="action-button" style="text-decoration: none; display: block; text-align: center;">Add Contribution</a>
+        </div>
+    </div>
+</body>
+</html>

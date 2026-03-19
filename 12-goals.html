@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirstPay - Goals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            margin: 20px auto;
+            background: #f5f5f5;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: #1a1a1a;
+            position: relative;
+        }
+
+        /* Status bar */
+        .status-bar {
+            padding: 12px 24px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .status-left {
+            display: flex;
+            gap: 4px;
+        }
+
+        .status-right {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* Header */
+        .header {
+            padding: 20px 24px;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .header-left p {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .header-right {
+            width: 40px;
+            height: 40px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Main content */
+        .screen-content {
+            flex: 1;
+            padding: 16px 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Summary Card */
+        .summary-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .summary-label {
+            font-size: 12px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .summary-amount {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .summary-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-top: 0;
+        }
+
+        /* Goals List */
+        .goals-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .goal-card {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .goal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .goal-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .goal-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .goal-target {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .goal-amount {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .goal-saved {
+            font-size: 13px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .goal-target-amount {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .goal-progress {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .goal-progress-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .progress-emergency {
+            width: 65%;
+            background: #667eea;
+        }
+
+        .progress-vacation {
+            width: 32%;
+            background: #f59e0b;
+        }
+
+        .progress-home {
+            width: 18%;
+            background: #10b981;
+        }
+
+        .goal-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #999;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            background: white;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            flex-shrink: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            font-size: 11px;
+            color: #999;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: #1e3c72;
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-left">
+                <span>9:41</span>
+            </div>
+            <div class="status-right">
+                <span>◆◆◆</span>
+                <span>◆</span>
+                <span>◼</span>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <h1>Goals</h1>
+                <p>Track your savings goals</p>
+            </div>
+            <div class="header-right">+</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="screen-content">
+            <!-- Summary Card -->
+            <div class="summary-card">
+                <div>
+                    <div class="summary-label">Total Saved</div>
+                    <div class="summary-amount">$3,850</div>
+                </div>
+                <div class="summary-info">
+                    <div>3 Active Goals</div>
+                    <div>On Track</div>
+                </div>
+            </div>
+
+            <!-- Goals List -->
+            <div>
+                <div class="section-title">Your Goals</div>
+                <div class="goals-list">
+                    <!-- Emergency Fund -->
+                    <div class="goal-card" onclick="window.location.href='13-goal-details.html';" style="cursor: pointer;">
+                        <div class="goal-header">
+                            <div class="goal-info">
+                                <div class="goal-name">Emergency Fund</div>
+                                <div class="goal-target">6 months expenses</div>
+                            </div>
+                            <div class="goal-amount">
+                                <div class="goal-saved">$2,600</div>
+                                <div class="goal-target-amount">$4,000</div>
+                            </div>
+                        </div>
+                        <div class="goal-progress">
+                            <div class="goal-progress-fill progress-emergency"></div>
+                        </div>
+                        <div class="goal-details">
+                            <div>65% complete</div>
+                            <div>$1,400 to go</div>
+                        </div>
+                    </div>
+
+                    <!-- Vacation -->
+                    <div class="goal-card">
+                        <div class="goal-header">
+                            <div class="goal-info">
+                                <div class="goal-name">Summer Vacation</div>
+                                <div class="goal-target">Target: June 2025</div>
+                            </div>
+                            <div class="goal-amount">
+                                <div class="goal-saved">$800</div>
+                                <div class="goal-target-amount">$2,500</div>
+                            </div>
+                        </div>
+                        <div class="goal-progress">
+                            <div class="goal-progress-fill progress-vacation"></div>
+                        </div>
+                        <div class="goal-details">
+                            <div>32% complete</div>
+                            <div>$1,700 to go</div>
+                        </div>
+                    </div>
+
+                    <!-- Home Down Payment -->
+                    <div class="goal-card">
+                        <div class="goal-header">
+                            <div class="goal-info">
+                                <div class="goal-name">Home Down Payment</div>
+                                <div class="goal-target">Long-term goal</div>
+                            </div>
+                            <div class="goal-amount">
+                                <div class="goal-saved">$450</div>
+                                <div class="goal-target-amount">$25,000</div>
+                            </div>
+                        </div>
+                        <div class="goal-progress">
+                            <div class="goal-progress-fill progress-home"></div>
+                        </div>
+                        <div class="goal-details">
+                            <div>18% complete</div>
+                            <div>$24,550 to go</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="06-dashboard.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">◆</div>
+                <div>Home</div>
+            </a>
+            <a href="07-budget.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">▦</div>
+                <div>Budget</div>
+            </a>
+            <a href="14-learning-hub.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">📈</div>
+                <div>Learn</div>
+            </a>
+            <a href="12-goals.html" class="nav-item active" style="text-decoration: none;">
+                <div class="nav-icon">♥</div>
+                <div>Goals</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

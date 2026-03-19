@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirstPay - Budget</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f5f5f5;
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            margin: 20px auto;
+            background: #f5f5f5;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: #1a1a1a;
+            position: relative;
+        }
+
+        /* Status bar */
+        .status-bar {
+            padding: 12px 24px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .status-left {
+            display: flex;
+            gap: 4px;
+        }
+
+        .status-right {
+            display: flex;
+            gap: 4px;
+        }
+
+        /* Header */
+        .header {
+            padding: 20px 24px;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .header-left p {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .header-right {
+            width: 40px;
+            height: 40px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Main content */
+        .screen-content {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Budget Summary */
+        .budget-summary {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .summary-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 8px;
+        }
+
+        .summary-amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .summary-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .summary-bar-fill {
+            height: 100%;
+            width: 65%;
+            background: linear-gradient(90deg, #ff6b6b 0%, #ff8c8c 100%);
+            border-radius: 4px;
+        }
+
+        .summary-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-top: 8px;
+        }
+
+        /* Budget Categories */
+        .budget-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+        }
+
+        .budget-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .budget-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .budget-icon {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .budget-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .budget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .budget-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .budget-spent {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .budget-progress {
+            width: 100%;
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .budget-progress-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .progress-groceries {
+            width: 55%;
+            background: #4ecdc4;
+        }
+
+        .progress-transport {
+            width: 72%;
+            background: #45b7d1;
+        }
+
+        .progress-dining {
+            width: 45%;
+            background: #96ceb4;
+        }
+
+        .budget-info {
+            font-size: 11px;
+            color: #999;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            background: white;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            flex-shrink: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            font-size: 11px;
+            color: #999;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: #1e3c72;
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-left">
+                <span>9:41</span>
+            </div>
+            <div class="status-right">
+                <span>◆◆◆</span>
+                <span>◆</span>
+                <span>◼</span>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <h1>Budget</h1>
+                <p>December 2024</p>
+            </div>
+            <div class="header-right">+</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="screen-content">
+            <!-- Budget Summary -->
+            <div class="budget-summary">
+                <div class="summary-label">Monthly Budget</div>
+                <div class="summary-amount">$1,250</div>
+                <div class="summary-bar">
+                    <div class="summary-bar-fill"></div>
+                </div>
+                <div class="summary-details">
+                    <div>Spent: $812</div>
+                    <div>Remaining: $438</div>
+                </div>
+            </div>
+
+            <!-- Budget Categories -->
+            <div>
+                <div class="section-title">Categories</div>
+                <div class="budget-list">
+                    <!-- Groceries -->
+                    <div class="budget-item">
+                        <div class="budget-icon">🛒</div>
+                        <div class="budget-details">
+                            <div class="budget-header">
+                                <div class="budget-name">Groceries</div>
+                                <div class="budget-spent">$275/$500</div>
+                            </div>
+                            <div class="budget-progress">
+                                <div class="budget-progress-fill progress-groceries"></div>
+                            </div>
+                            <div class="budget-info">55% of budget used</div>
+                        </div>
+                    </div>
+
+                    <!-- Transport -->
+                    <div class="budget-item">
+                        <div class="budget-icon">🚗</div>
+                        <div class="budget-details">
+                            <div class="budget-header">
+                                <div class="budget-name">Transport</div>
+                                <div class="budget-spent">$144/$200</div>
+                            </div>
+                            <div class="budget-progress">
+                                <div class="budget-progress-fill progress-transport"></div>
+                            </div>
+                            <div class="budget-info">72% of budget used</div>
+                        </div>
+                    </div>
+
+                    <!-- Dining -->
+                    <div class="budget-item">
+                        <div class="budget-icon">🍽</div>
+                        <div class="budget-details">
+                            <div class="budget-header">
+                                <div class="budget-name">Dining & Entertainment</div>
+                                <div class="budget-spent">$180/$400</div>
+                            </div>
+                            <div class="budget-progress">
+                                <div class="budget-progress-fill progress-dining"></div>
+                            </div>
+                            <div class="budget-info">45% of budget used</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <a href="06-dashboard.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">◆</div>
+                <div>Home</div>
+            </a>
+            <a href="07-budget.html" class="nav-item active" style="text-decoration: none;">
+                <div class="nav-icon">▦</div>
+                <div>Budget</div>
+            </a>
+            <a href="14-learning-hub.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">📈</div>
+                <div>Learn</div>
+            </a>
+            <a href="12-goals.html" class="nav-item" style="text-decoration: none;">
+                <div class="nav-icon">♥</div>
+                <div>Goals</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
